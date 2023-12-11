@@ -166,9 +166,5 @@ xeteval_always("key", quickfn, x)
 ```
 
 
-```
-
 # License
 [BSD 3](LICENSE)
-
-
