@@ -8,6 +8,17 @@ The cache can be stored on local disk together with your notebooks and code
 Or alternatively, it can be fully managed by the [Xethub](xethub.com) service
 to easily share the cache with your collaborators.
 
+# Install
+```
+pip install xetcache
+```
+
+Or to install from here:
+
+```
+pip install git+https://github.com/xetdata/xetcache.git
+```
+
 # Setup With Local / Git storage
 No additional set up needed. See Usage below.
 
