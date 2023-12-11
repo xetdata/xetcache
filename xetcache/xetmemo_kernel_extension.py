@@ -52,6 +52,12 @@ class XMemoMagics(Magics):
 
         Note that inputs can be anything picklable including functions.
 
+        A key parameter can be added to group the stored objects together.
+        Objects stored with one key will not be retrievable with a different
+        key
+
+           %%xetmemo input=v1,v2 output=v3,v4 always=True key=experiment1
+
         Also see the `xetcache.xetmemo` decorator for a version that can be
         used as a function decorator
         '''
@@ -61,6 +67,7 @@ class XMemoMagics(Magics):
         outputvars = []
         ip = self.shell
         always = False
+        key = None
 
         for arg in args:
             k, v = arg.split('=')
@@ -70,6 +77,8 @@ class XMemoMagics(Magics):
                 outputvars = [x.strip() for x in v.split(',')]
             elif k == 'always':
                 always = (v.strip() == 'True')
+            elif k == 'key':
+                key = v.strip()
             else:
                 raise RuntimeError(f'Unexpected xmemo key type {k}')
 
@@ -96,7 +105,7 @@ class XMemoMagics(Magics):
         memopath = get_memo_path()
         runtime_threshold = get_runtime_threshold()
         try:
-            retrieved_vals = probe_memo(memopath, inputhashstr)
+            retrieved_vals = probe_memo(memopath, inputhashstr, key)
             if retrieved_vals is not None:
                 keys = retrieved_vals.keys()
                 print(f"Retrieving variables {list(keys)}")
@@ -119,7 +128,7 @@ class XMemoMagics(Magics):
                         print(f"{v} not found in scope. Error in specification. Not memoizing.")
                         return
                     storedict[v] = ip.user_ns[v]
-                store_memo(memopath, inputhashstr, storedict)
+                store_memo(memopath, inputhashstr, storedict, key)
             except Exception as e:
                 print(f"Unable to write memo file to {memopath}: {e}")
 

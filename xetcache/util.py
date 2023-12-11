@@ -31,12 +31,15 @@ def materialize_pointer_file(x):
         return False
 
 
-def probe_memo(memopath, inputhashstr):
+def probe_memo(memopath, inputhashstr, key=None):
     """
     Locate the memo from the provided input.
     """
     memo_file = inputhashstr + '.pickle'
-    full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
+    if key is None:
+        full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
+    else:
+        full_memo_file = os.path.join(memopath, key, inputhashstr + '.pickle')
     if full_memo_file.startswith("xet://"):
         try:
             openfile = fsspec.open(full_memo_file, 'rb')
@@ -49,6 +52,8 @@ def probe_memo(memopath, inputhashstr):
                 result = pickle.loads(fbytestr)
                 return result
         except Exception as e:
+            if str("404 Not Found") in str(e):
+                return None
             print(f'Failed to load: {e}')
             return None
     elif os.path.exists(full_memo_file):
@@ -64,12 +69,16 @@ def probe_memo(memopath, inputhashstr):
     return None
 
 
-def store_memo(memopath, inputhashstr, store):
+def store_memo(memopath, inputhashstr, store, key):
     """
     Locate the memo from the provided input.
     """
     memo_file = inputhashstr + '.pickle'
-    full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
+    if key is None:
+        full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
+    else:
+        full_memo_file = os.path.join(memopath, key, inputhashstr + '.pickle')
+        memopath = os.path.join(memopath, key)
     if full_memo_file.startswith("xet://"):
         fs = fsspec.filesystem("xet")
         with fs.transaction:
