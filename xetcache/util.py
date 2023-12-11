@@ -39,6 +39,7 @@ def probe_memo(memopath, inputhashstr, key=None):
     if key is None:
         full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
     else:
+        key = str(key)
         full_memo_file = os.path.join(memopath, key, inputhashstr + '.pickle')
     if full_memo_file.startswith("xet://"):
         try:
@@ -77,6 +78,7 @@ def store_memo(memopath, inputhashstr, store, key):
     if key is None:
         full_memo_file = os.path.join(memopath, inputhashstr + '.pickle')
     else:
+        key = str(key)
         full_memo_file = os.path.join(memopath, key, inputhashstr + '.pickle')
         memopath = os.path.join(memopath, key)
     if full_memo_file.startswith("xet://"):

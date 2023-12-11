@@ -56,7 +56,7 @@ Xet login will write authentication information to `~/.xetconfig`
 
 ### Environment Variable
 Environment variables may be sometimes more convenient:
-```
+```bash
 export XET_USER_EMAIL = <email>
 export XET_USER_NAME = <username>
 export XET_USER_TOKEN = <personal_access_token>
@@ -71,66 +71,101 @@ import pyxet
 pyxet.login(<username>, <personal_access_token>, <email>)
 ```
 
-# Usage For Jupyter Notebooks
+# Usage
 
-For Jupyter notebooks, run the following command to load the extension
-```
-%load_ext xetcache
-```
-
-If you are caching XetHub, you need to run:
+If you are caching on XetHub, you need to run:
 ```
 import xetcache
 xetcache.set_xet_project([give a project name here])
 ```
 
-After which adding the following line to the top of a cell
+## Usage For Jupyter Notebooks
+
+For Jupyter notebooks, run the following command to load the extension
+```python
+%load_ext xetcache
 ```
+
+After which adding the following line to the top of a cell
+```python
 %%xetmemo input=v1,v2 output=v3,v4
 ```
 will cache the specified output variables (v3,v4 here) each time it is called.
 If called later with the same input values for v1,v2, the cached value is
 returned and not reevaluated. The cache is persistent across Python runs.
 
-# Usage For Function Caching
+By default, the output will only be cached if the cell takes longer the 3
+seconds to run. "always=True" can be added to the xetmemo arguments to
+ignore the runime and to always cache:
 
-If you are caching XetHub, you need to run:
 ```
-import xetcache
-xetcache.set_xet_project([give a project name here])
+%%xetmemo input=v1,v2 output=v3,v4 always=True
 ```
 
+Note that inputs can be anything picklable including functions.
+
+A key parameter can be added to group the stored objects together.
+Objects stored with one key will not be retrievable with a different
+key
+
+```python
+%%xetmemo input=v1,v2 output=v3,v4 always=True key=experiment1
+```
+
+## Usage For Function Caching
 To cache the output of a function:
-```
+```python
 from xetcache import xetmemo
 
 @xetmemo
-def slow_function(stuff):
-    ...
-```
-This will caches the function outputs each time it is called.
-If called later with the same inputs , the cached value is returned
-and not reevaluated. This is persistent across Python runs.
+def slowfunction(arg1, arg2):
+   ...
 
-# Performance 
-For performance reasons, only functions which take more than 3
-seconds (configurable from `xetcache.config.set_runtime_threshold`) will be
-cached. 
-
-If you want to cache the result always in a Jupyter notebook cell,
-add always=True to the cell magic line. ex:
-```
-%%xetmemo input=v1,v2 output=v3,v4 magic=True
+# Stores with a key
+@xetmemo(key="hello")
+def slowfunction(arg1, arg2):
+   ...
 ```
 
-And if you want to cache the result always for a function,
-replace `xetmemo` with `xetmemo_always`.
-```
-from xetcache import xetmemo_always
+By default, the output will only be cached if the cell takes longer the 3
+seconds to run. "always=True" can be added to the xetmemo arguments to
+ignore the runtime and to always cache:
 
-@xetmemo_always
-def slow_function(stuff):
-    ...
+```python
+# This will always cache irrespective of runtime
+@xetmemo(always=True)
+def slowfunction(arg1, arg2):
+   ...
+```
+
+## Usage For Function Call Caching
+
+To cache a function call:
+
+```python
+def slowfn(x):
+    ..do stuff..
+
+# caches the call to slowfn with argument x
+xeteval(slowfn, x)
+
+# Stores with a key
+xeteval("key", slowfn, x)
+```
+
+By default, the output will only be cached if the cell takes longer the 3
+seconds to run. `xeteval_always` can be used instead to 
+ignore the runtime and to always cache:
+
+```python
+# Store even if function is quick to run
+xeteval_always(quickfn, x)
+
+# Store with a key and to always store even the function is quick to run
+xeteval_always("key", quickfn, x)
+```
+
+
 ```
 
 # License

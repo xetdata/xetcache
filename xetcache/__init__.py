@@ -16,7 +16,7 @@ class xetmemo(object):
     def slowfunction(arg1, arg2):
        ...
 
-    # Key the cache entries
+    # Stores with a key
     @xetmemo(key="hello")
     def slowfunction(arg1, arg2):
        ...
@@ -68,7 +68,7 @@ class xetmemo(object):
         else:
             obj = args[0]
 
-        key = str(self.key)
+        key = self.key
         always = self.always
 
         @functools.wraps(obj)
@@ -105,11 +105,25 @@ class xetmemo(object):
             return memoizer
 
 
-def xeteval(f, *args, **kwargs):
+def xeteval(key_or_f, *args, **kwargs):
     """
-    Caches the function call f(*args,  **kwargs)
+    Caches the result of a function call:
+    ```
+    def slowfn(x):
+        ..do stuff..
+
+    # caches the call to slowfn with argument x
+    xeteval(slowfn, x)
+
+    # Stores with a key
+    xeteval("key", slowfn, x)
+    ```
     If called later with the same inputs , the cached value is returned
     and not reevaluated. This is persistent across Python runs.
+
+    The optional key parameter is a string that is used to group the stored
+    objects together.  Objects stored with one key will not be retrievable with
+    a different key. 
 
     Any changes to any of the arguments will force reevaluation of the cell.
     Otherwise the outputs will simply be retrieved from the memo.
@@ -120,12 +134,56 @@ def xeteval(f, *args, **kwargs):
     The cache will only be used if the function take more than 3
     seconds to run.
 
-    See `xeteval_with_key` to group caches with a key,
+    See `xeteval_always` to always cache ignoring function runtime
     and `xetmemo` for a decorator version.
     """
-    return xeteval_with_key(None, f, *args, **kwargs)
+    if callable(key_or_f):
+        return _xeteval_impl(None, key_or_f, False, *args, **kwargs)
+    else:
+        key = key_or_f
+        f = args[0]
+        args = args[1:]
+        return _xeteval_impl(key, f, False, *args, **kwargs)
 
-def xeteval_with_key(key, f, *args, **kwargs):
+
+def xeteval_always(key_or_f, *args, **kwargs):
+    """
+    Caches the result of a function call:
+    ```
+    def slowfn(x):
+        ..do stuff..
+
+    # caches the call to slowfn with argument x
+    xeteval_always(slowfn, x)
+
+    # Stores with a key
+    xeteval_always("key", slowfn, x)
+    ```
+    If called later with the same inputs , the cached value is returned
+    and not reevaluated. This is persistent across Python runs.
+
+    The optional key parameter is a string that is used to group the stored
+    objects together.  Objects stored with one key will not be retrievable with
+    a different key. 
+
+    Any changes to any of the arguments will force reevaluation of the cell.
+    Otherwise the outputs will simply be retrieved from the memo.
+
+    This memo is persistent across Python processes and if XetHub is used
+    see `xetcache.set_xet_project`, can be shared with others.
+
+    See `xeteval` to only cache long running functions
+    and `xetmemo` for a decorator version.
+    """
+    if callable(key_or_f):
+        return _xeteval_impl(None, key_or_f, True, *args, **kwargs)
+    else:
+        key = key_or_f
+        f = args[0]
+        args = args[1:]
+        return _xeteval_impl(key, f, True, *args, **kwargs)
+
+def _xeteval_impl(key, f, always, *args, **kwargs):
     """
     Caches the function call f(*args,  **kwargs)
     If called later with the same inputs , the cached value is returned
@@ -146,7 +204,6 @@ def xeteval_with_key(key, f, *args, **kwargs):
     See `xeteval` for a version without a key
     See `xetmemo` for a decorator version.
     """
-    key = str(key)
     memopath = get_memo_path()
     from .util import hash_anything, probe_memo, store_memo
     inputhashstr = hash_anything([args, kwargs])
@@ -162,7 +219,7 @@ def xeteval_with_key(key, f, *args, **kwargs):
     start_time = time.time()
     ret = f(*args, **kwargs)
     elapsed_time = time.time() - start_time
-    if elapsed_time > get_runtime_threshold():
+    if always or elapsed_time > get_runtime_threshold():
         try:
             store_memo(memopath, inputhashstr, {"RETVAL": ret}, key)
         except Exception as e:
