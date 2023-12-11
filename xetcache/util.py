@@ -40,11 +40,14 @@ def probe_memo(memopath, inputhashstr):
     if full_memo_file.startswith("xet://"):
         try:
             openfile = fsspec.open(full_memo_file, 'rb')
+            fbytestr = None
             with openfile as f:
                 print(f"Loading from {memo_file}")
-                result = pickle.load(f)
+                fbytestr = f.read()
+                result = pickle.loads(fbytestr)
                 return result
-        except:
+        except Exception as e:
+            print(f'Failed to load: {e}')
             return None
     elif os.path.exists(full_memo_file):
         if file_is_pointer_file(full_memo_file):
