@@ -43,6 +43,8 @@ def probe_memo(memopath, inputhashstr):
             fbytestr = None
             with openfile as f:
                 print(f"Loading from {memo_file}")
+                # reading from a string first will avoid potential tiny
+                # reads that are extraordinarily slow
                 fbytestr = f.read()
                 result = pickle.loads(fbytestr)
                 return result
