@@ -29,9 +29,6 @@ deduplication capabilities that allows similar objects to be stored or loaded,
 without needing to upload or download everything. We can also deploy caches near
 your compute workloads to accelerate dataloading by over 10x.
 
-Signup on [XetHub](https://xethub.com/user/sign_up) and obtain
-a username and access token. You should write this down.
-
 ## Authentication
 
 Signup on [XetHub](https://xethub.com/user/sign_up) and obtain
