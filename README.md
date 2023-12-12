@@ -8,6 +8,24 @@ The cache can be stored on local disk together with your notebooks and code
 Or alternatively, it can be fully managed by the [Xethub](xethub.com) service
 to easily share the cache with your collaborators.
 
+# Table of Contents
+
+* [XetCache](#xetcache)
+* [Install](#install)
+* [Setup](#setup)
+  * [Setup With Local](#setup-with-local)
+  * [Setup with Git Storage](#setup-with-git-storage)
+  * [Setup With Xethub](#setup-with-xethub)
+    * [Authentication](#authentication)
+      * [Command Line](#command-line)
+      * [Environment Variable](#environment-variable)
+      * [In Python](#in-python)
+* [Usage](#usage)
+  * [Usage For Jupyter Notebooks](#usage-for-jupyter-notebooks)
+  * [Usage For Function Caching](#usage-for-function-caching)
+  * [Usage For Function Call Caching](#usage-for-function-call-caching)
+* [License](#license)
+
 # Install
 ```
 pip install xetcache
