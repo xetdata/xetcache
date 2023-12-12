@@ -225,3 +225,11 @@ def _xeteval_impl(key, f, always, *args, **kwargs):
         except Exception as e:
             print(f"Unable to write memo file to {memopath}: {e}")
     return ret
+
+
+try:
+    from IPython import get_ipython
+    ip = get_ipython()
+    load_ipython_extension(ip)
+except:
+    pass

@@ -105,7 +105,7 @@ xetcache.set_xet_project([give a project name here])
 
 For Jupyter notebooks, run the following command to load the extension
 ```python
-%load_ext xetcache
+import xetcache
 ```
 
 After which adding the following line to the top of a cell
