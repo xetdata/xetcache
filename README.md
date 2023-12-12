@@ -19,12 +19,17 @@ Or to install from here:
 pip install git+https://github.com/xetdata/xetcache.git
 ```
 
-# Setup With Local / Git storage
+# Setup
+## Setup With Local 
 No additional set up needed. See Usage below.
 
-However, if using a git repository in Github
-we recommend the use of [Xethub's extensions to Github](https://xetdata.com)
-for performance and the ability to lazily fetch cached objects.
+## Setup with Git Storage
+If using LFS, you can just directly commit and push the cache files in the
+`xmemo` folder.
+
+However, if using Github we recommend the use of [Xethub's extensions to
+Github](https://xetdata.com) for performance and the ability to lazily fetch
+cached objects.
 
 For instance, a repository with the Xethub extension will allow you to
 lazy clone the repository with 
@@ -34,27 +39,27 @@ git xet clone --lazy [repo]
 which will avoid fetching any large cached objects until they are 
 actually needed.
 
-# Setup With Xethub
+## Setup With Xethub
 The use of the fully managed XetHub service provides more powerful data
 deduplication capabilities that allows similar objects to be stored or loaded,
 without needing to upload or download everything. We can also deploy caches near
 your compute workloads to accelerate dataloading by over 10x.
 
-## Authentication
+### Authentication
 
 Signup on [XetHub](https://xethub.com/user/sign_up) and obtain
 a username and access token. You should write this down.
 
 There are three ways to authenticate with XetHub:
 
-### Command Line
+#### Command Line
 
 ```bash
 xet login -e <email> -u <username> -p <personal_access_token>
 ```
 Xet login will write authentication information to `~/.xetconfig`
 
-### Environment Variable
+#### Environment Variable
 Environment variables may be sometimes more convenient:
 ```bash
 export XET_USER_EMAIL = <email>
@@ -62,7 +67,7 @@ export XET_USER_NAME = <username>
 export XET_USER_TOKEN = <personal_access_token>
 ```
 
-### In Python
+#### In Python
 Finally if in a notebook environment, or a non-persistent environment,
 we also provide a method to authenticate directly from Python. Note that
 this must be the first thing you run before any other operation:
@@ -73,7 +78,7 @@ pyxet.login(<username>, <personal_access_token>, <email>)
 
 # Usage
 
-If you are caching on XetHub, you need to run:
+*Optional* : to cache on XetHub, you need to run:
 ```
 import xetcache
 xetcache.set_xet_project([give a project name here])
