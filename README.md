@@ -10,7 +10,6 @@ to easily share the cache with your collaborators.
 
 # Table of Contents
 
-* [XetCache](#xetcache)
 * [Install](#install)
 * [Setup](#setup)
   * [Setup With Local](#setup-with-local)
