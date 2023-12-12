@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-readme = open('README.md').read()
+readme = open('README.rst').read()
 
 setup(
     name='xetcache',

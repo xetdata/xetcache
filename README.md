@@ -30,7 +30,7 @@ to easily share the cache with your collaborators.
 pip install xetcache
 ```
 
-Or to install from here:
+Or to install from source from Github:
 
 ```
 pip install git+https://github.com/xetdata/xetcache.git
