@@ -24,10 +24,6 @@ class XMemoMagics(Magics):
     @cell_magic
     def xetmemo(self, line, cell):
         '''
-        Load the extension with 
-
-           %load_ext xetcache
-
         Usage:
 
            %%xetmemo input=v1,v2 output=v3,v4
