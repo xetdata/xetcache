@@ -5,7 +5,7 @@ notebook cells.
 
 The cache can be stored on local disk together with your notebooks and code
 (and using LFS, or the git-xet extension to store it with your git repo).
-Or alternatively, it can be fully managed by the [Xethub](xethub.com) service
+Or alternatively, it can be fully managed by the [XetHub](xethub.com) service
 to easily share the cache with your collaborators.
 
 # Table of Contents
@@ -14,7 +14,7 @@ to easily share the cache with your collaborators.
 * [Setup](#setup)
   * [Setup With Local](#setup-with-local)
   * [Setup with Git Storage](#setup-with-git-storage)
-  * [Setup With Xethub](#setup-with-xethub)
+  * [Setup With XetHub](#setup-with-xethub)
     * [Authentication](#authentication)
       * [Command Line](#command-line)
       * [Environment Variable](#environment-variable)
@@ -30,7 +30,7 @@ to easily share the cache with your collaborators.
 pip install xetcache
 ```
 
-Or to install from source from Github:
+Or to install from source from GitHub:
 
 ```
 pip install git+https://github.com/xetdata/xetcache.git
@@ -44,11 +44,11 @@ No additional set up needed. See Usage below.
 If using LFS, you can just directly commit and push the cache files in the
 `xmemo` folder.
 
-However, if using Github we recommend the use of [Xethub's extensions to
-Github](https://xetdata.com) for performance and the ability to lazily fetch
+However, if using GitHub we recommend the use of [XetHub's extensions to
+GitHub](https://xetdata.com) for performance and the ability to lazily fetch
 cached objects.
 
-For instance, a repository with the Xethub extension will allow you to
+For instance, a repository with the XetHub extension will allow you to
 lazy clone the repository with 
 ```
 git xet clone --lazy [repo]
@@ -56,7 +56,7 @@ git xet clone --lazy [repo]
 which will avoid fetching any large cached objects until they are 
 actually needed.
 
-## Setup With Xethub
+## Setup With XetHub
 The use of the fully managed XetHub service provides more powerful data
 deduplication capabilities that allows similar objects to be stored or loaded,
 without needing to upload or download everything. We can also deploy caches near

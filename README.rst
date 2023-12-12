@@ -7,9 +7,33 @@ jupyter notebook cells.
 The cache can be stored on local disk together with your notebooks and
 code (and using LFS, or the git-xet extension to store it with your git
 repo). Or alternatively, it can be fully managed by the
-`Xethub <xethub.com>`__ service to easily share the cache with your
+`XetHub <xethub.com>`__ service to easily share the cache with your
 collaborators.
 
+Table of Contents
+=================
+
+-  `Install <#install>`__
+-  `Setup <#setup>`__
+
+   -  `Setup With Local <#setup-with-local>`__
+   -  `Setup with Git Storage <#setup-with-git-storage>`__
+   -  `Setup With XetHub <#setup-with-xethub>`__
+
+      -  `Authentication <#authentication>`__
+
+         -  `Command Line <#command-line>`__
+         -  `Environment Variable <#environment-variable>`__
+         -  `In Python <#in-python>`__
+
+-  `Usage <#usage>`__
+
+   -  `Usage For Jupyter Notebooks <#usage-for-jupyter-notebooks>`__
+   -  `Usage For Function Caching <#usage-for-function-caching>`__
+   -  `Usage For Function Call
+      Caching <#usage-for-function-call-caching>`__
+
+-  `License <#license>`__
 
 Install
 =======
@@ -18,7 +42,7 @@ Install
 
    pip install xetcache
 
-Or to install from source from Github:
+Or to install from source from GitHub:
 
 ::
 
@@ -38,11 +62,11 @@ Setup with Git Storage
 If using LFS, you can just directly commit and push the cache files in
 the ``xmemo`` folder.
 
-However, if using Github we recommend the use of `Xethub’s extensions to
-Github <https://xetdata.com>`__ for performance and the ability to
+However, if using GitHub we recommend the use of `XetHub’s extensions to
+GitHub <https://xetdata.com>`__ for performance and the ability to
 lazily fetch cached objects.
 
-For instance, a repository with the Xethub extension will allow you to
+For instance, a repository with the XetHub extension will allow you to
 lazy clone the repository with
 
 ::
@@ -52,7 +76,7 @@ lazy clone the repository with
 which will avoid fetching any large cached objects until they are
 actually needed.
 
-Setup With Xethub
+Setup With XetHub
 -----------------
 
 The use of the fully managed XetHub service provides more powerful data
