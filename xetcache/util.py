@@ -3,7 +3,12 @@ import pickle
 import os
 import subprocess
 import fsspec
-
+import inspect
+def hash_fn(x):
+    try:
+        return pickle.dumps(x)
+    except:
+        return pickle.dumps(inspect.getsource(x))
 
 def hash_anything(x):
     return hashlib.sha256(pickle.dumps(x)).hexdigest()

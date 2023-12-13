@@ -74,8 +74,8 @@ class xetmemo(object):
         @functools.wraps(obj)
         def memoizer(*args, **kwargs):
             memopath = get_memo_path()
-            from .util import hash_anything, probe_memo, store_memo
-            inputhashstr = hash_anything([args, kwargs])
+            from .util import hash_fn, hash_anything, probe_memo, store_memo
+            inputhashstr = hash_anything([hash_fn(obj), args, kwargs])
             try:
                 retrieved_vals = probe_memo(memopath, inputhashstr, key)
                 if retrieved_vals is not None:
@@ -205,8 +205,8 @@ def _xeteval_impl(key, f, always, *args, **kwargs):
     See `xetmemo` for a decorator version.
     """
     memopath = get_memo_path()
-    from .util import hash_anything, probe_memo, store_memo
-    inputhashstr = hash_anything([args, kwargs])
+    from .util import hash_fn, hash_anything, probe_memo, store_memo
+    inputhashstr = hash_anything([hash_fn(f), args, kwargs])
     try:
         retrieved_vals = probe_memo(memopath, inputhashstr, key)
         if retrieved_vals is not None:
