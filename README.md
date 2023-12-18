@@ -5,7 +5,7 @@ notebook cells.
 
 The cache can be stored on local disk together with your notebooks and code
 (and using LFS, or the git-xet extension to store it with your git repo).
-Or alternatively, it can be fully managed by the [XetHub](xethub.com) service
+Or alternatively, it can be fully managed by the [XetHub](http://www.xethub.com) service
 to easily share the cache with your collaborators.
 
 # Table of Contents
