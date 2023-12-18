@@ -25,6 +25,10 @@ to easily share the cache with your collaborators.
   * [Usage For Function Call Caching](#usage-for-function-call-caching)
 * [License](#license)
 
+# Our motivations
+
+We created the `xetcache` library after our own frustrations working with Jupyter Notebooks with long running functions. You can get the full context by reading [this blog post](https://about.xethub.com/blog/xetcache-cache-jupyter-notebook-cells-for-performance-reproducibility?utm_source=github).
+
 # Install
 ```
 pip install xetcache
